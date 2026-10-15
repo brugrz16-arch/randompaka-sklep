@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RandomPaka — Małe rzeczy, wielka radość!</title>
+<style>
+:root{--blue:#2563eb;--navy:#14213d;--sky:#eaf3ff;--pink:#ffcae2;--yellow:#ffe66d;--ink:#172033;--muted:#5c667a;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#f2f8ff 0,#fff 360px)}
+header{padding:22px 5%;background:linear-gradient(120deg,#173f9f,#3478f6 60%,#8b5cf6);color:white}
+.top{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:clamp(1.45rem,4vw,2.1rem);letter-spacing:-.04em}
+.tag{opacity:.92;margin-top:4px}
+.pill{border:1px solid #ffffff75;border-radius:999px;padding:9px 14px;font-weight:700}
+.hero{max-width:1100px;margin:26px auto 0;padding:26px 5% 38px;display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:center}
+.hero h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.02;margin:0 0 15px;letter-spacing:-.045em}
+.hero p{font-size:1.08rem;color:#45516a;line-height:1.6;max-width:600px}
+.hero-art{min-height:220px;border-radius:28px;background:linear-gradient(145deg,#ffcae2,#ffe66d 48%,#9be7ff);display:grid;place-items:center;font-size:clamp(4rem,10vw,7rem);box-shadow:0 18px 45px #1d4ed81c;transform:rotate(1deg)}
+main{max-width:1100px;margin:auto;padding:0 5% 50px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin:12px 0 18px}
+h2{margin:0;font-size:1.7rem;letter-spacing:-.03em}
+.note{color:var(--muted);font-size:.93rem}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.card{background:white;border:1px solid #e5eaf3;border-radius:22px;padding:18px;box-shadow:0 8px 24px #1720330b;display:flex;flex-direction:column;gap:12px}
+.product-art{height:135px;border-radius:16px;display:grid;place-items:center;font-size:4rem;background:var(--sky)}
+.card:nth-child(2) .product-art{background:#fff0f7}.card:nth-child(3) .product-art{background:#f0edff}.card:nth-child(4) .product-art{background:#fff8d8}.card:nth-child(5) .product-art{background:#e5fbf3}
+.card h3{margin:0;font-size:1.13rem}
+.card p{margin:0;color:var(--muted);line-height:1.45;flex:1}
+.price{font-size:1.15rem;font-weight:850}
+button{border:0;border-radius:12px;background:var(--blue);color:white;padding:11px 14px;font-weight:800;font-size:.95rem;cursor:pointer}
+button:hover{filter:brightness(.95)}button.secondary{background:#eaf1ff;color:#1947a8}button.dark{background:var(--navy)}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+.panel{border:1px solid #e3e9f3;background:#fff;border-radius:22px;padding:20px;box-shadow:0 8px 24px #17203308}
+.panel h2{font-size:1.35rem;margin-bottom:8px}
+label{display:block;font-size:.9rem;font-weight:750;margin:12px 0 6px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;background:white;font:inherit;color:var(--ink)}
+textarea{min-height:72px;resize:vertical}
+.preview{margin-top:12px;min-height:150px;border-radius:16px;background:#f0f5ff;display:grid;place-items:center;padding:16px;text-align:center;overflow:hidden}
+.shirt{width:125px;height:130px;background:#3b82f6;clip-path:polygon(25% 0,42% 8%,58% 8%,75% 0,100% 22%,82% 40%,72% 30%,72% 100%,28% 100%,28% 30%,18% 40%,0 22%);display:flex;align-items:center;justify-content:center;color:white;font-weight:900;text-align:center;padding:15px;overflow-wrap:anywhere}
+.sticker-preview{width:100%;min-height:110px;display:grid;place-items:center;border-radius:14px;background:#fff0f7;border:2px dashed #e879b9;font-size:2.2rem;padding:14px;overflow-wrap:anywhere}
+.cart-items{display:grid;gap:9px;margin:14px 0}
+.cart-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px;border-radius:12px;background:#f5f8fc}
+.cart-item small{display:block;color:var(--muted)}
+.cart-total{font-size:1.25rem;font-weight:900;display:flex;justify-content:space-between;border-top:1px solid #e5eaf3;padding-top:14px}
+footer{text-align:center;padding:26px 5%;color:#667085;font-size:.9rem;background:#f4f7fc}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14213d;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px #0002;display:none;max-width:90%;z-index:5}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.hero-art{min-height:150px}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.tools{grid-template-columns:1fr}}
+@media(max-width:480px){.products{grid-template-columns:1fr}.card{padding:15px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div><div class="brand">📦 RandomPaka</div><div class="tag">Małe rzeczy, wielka radość!</div></div><div class="pill">✨ Kreatywne drobiazgi</div></div></header>
+<section class="hero">
+  <div><h1>Znajdź coś <span style="color:#2563eb">fajnego</span> albo stwórz po swojemu!</h1>
+  <p>Koszulki, naklejki, wydruki 3D, gniotki i niespodzianki. Wybierz produkt, pobaw się kreatorem i dodaj go do przykładowego koszyka.</p>
+  <a href="#produkty"><button>Odkryj produkty ↓</button></a></div>
+  <div class="hero-art" aria-label="Kolorowa paczka">🎁⭐🌀</div>
+</section>
+<main>
+<section id="produkty">
+<div class="section-head"><h2>Nasze produkty</h2><div class="note">Ceny przykładowe — potwierdź je przed sprzedażą.</div></div>
+<div class="products">
+<article class="card"><div class="product-art">👕</div><h3>Koszulka z Twoim nadrukiem</h3><p>Wybierz kolor, rozmiar i własny napis.</p><div class="price">od 30 zł</div><button onclick="add('Koszulka z nadrukiem',30)">Dodaj do koszyka</button></article>
+<article class="card"><div class="product-art">⭐🎨</div><h3>Naklejki do wyboru</h3><p>Kolorowe wzory i własne pomysły.</p><div class="price">od 7 zł</div><button onclick="add('Naklejki',7)">Dodaj do koszyka</button></article>
+<article class="card"><div class="product-art">🐉</div><h3>Wydruki 3D</h3><p>Małe figurki i ciekawe kształty.</p><div class="price">od 10 zł</div><button onclick="add('Wydruk 3D',10)">Dodaj do koszyka</button></article>
+<article class="card"><div class="product-art">🧸</div><h3>Własnoręczny gniotek</h3><p>Miękki, zabawny drobiazg do ściskania.</p><div class="price">10 zł</div><button onclick="add('Gniotek',10)">Dodaj do koszyka</button></article>
+<article class="card"><div class="product-art">🎁</div><h3>RandomBox</h3><p>Paczka niespodzianka z wybranymi drobiazgami.</p><div class="price">40 zł</div><button onclick="add('RandomBox',40)">Dodaj do koszyka</button></article>
+<article class="card"><div class="product-art">💡</div><h3>Masz własny pomysł?</h3><p>Skorzystaj z kreatorów poniżej, żeby przygotować projekt.</p><div class="price">Stwórz coś swojego</div><a href="#kreatory"><button class="secondary">Otwórz kreatory ↓</button></a></article>
+</div>
+</section>
+<section id="kreatory" class="tools">
+<div class="panel"><h2>👕 Kreator koszulki</h2><p class="note">To podgląd projektu — nie zamawia prawdziwego produktu.</p>
+<label for="shirtColor">Kolor koszulki</label><select id="shirtColor" onchange="updateShirt()"><option value="#3b82f6">Niebieski</option><option value="#111827">Czarny</option><option value="#ffffff">Biały</option><option value="#ef4444">Czerwony</option><option value="#22c55e">Zielony</option><option value="#a855f7">Fioletowy</option></select>
+<label for="shirtSize">Rozmiar</label><select id="shirtSize"><option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+<label for="shirtSide">Nadruk</label><select id="shirtSide"><option value="30">Jedna strona — 30 zł</option><option value="40">Dwie strony — 40 zł</option></select>
+<label for="shirtText">Twój napis</label><input id="shirtText" maxlength="32" placeholder="Np. RANDOMPAKA" oninput="updateShirt()">
+<div class="preview"><div id="shirtPreview" class="shirt">TWÓJ<br>NAPIS</div></div>
+<button onclick="addShirt()">Dodaj projekt do koszyka</button></div>
+<div class="panel"><h2>⭐ Kreator naklejki</h2><p class="note">Wybierz kolor i wpisz swój tekst lub emoji.</p>
+<label for="stickerColor">Kolor tła</label><select id="stickerColor" onchange="updateSticker()"><option value="#fff0f7">Różowy</option><option value="#eaf3ff">Niebieski</option><option value="#fff8d8">Żółty</option><option value="#e5fbf3">Miętowy</option><option value="#f0edff">Fioletowy</option></select>
+<label for="stickerEmoji">Motyw</label><select id="stickerEmoji" onchange="updateSticker()"><option>⭐</option><option>🐉</option><option>🎮</option><option>🐼</option><option>🌈</option><option>🌀</option><option>🎁</option></select>
+<label for="stickerText">Napis (opcjonalnie)</label><input id="stickerText" maxlength="28" placeholder="Np. super!" oninput="updateSticker()">
+<div class="preview"><div id="stickerPreview" class="sticker-preview">⭐</div></div>
+<button onclick="addSticker()">Dodaj naklejkę do koszyka</button></div>
+</section>
+<section class="panel" style="margin-top:18px" id="koszyk"><div class="section-head"><div><h2>🛒 Koszyk — <span id="cartCount">0</span></h2><div class="note">Koszyk demonstracyjny, nie wysyła zamówień.</div></div><button class="secondary" onclick="clearCart()">Wyczyść koszyk</button></div>
+<div id="cartItems" class="cart-items"><p class="note">Koszyk jest pusty. Dodaj coś z listy produktów.</p></div><div class="cart-total"><span>Razem</span><span id="cartTotal">0 zł</span></div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button onclick="copySummary()">Kopiuj podsumowanie</button><button class="dark" onclick="showInfo()">Informacje o zamówieniach</button></div>
+<div id="checkout" style="margin-top:22px;border-top:1px solid #e5eaf3;padding-top:18px">
+<h2 style="font-size:1.25rem">🧾 Formularz zamówienia — wersja testowa</h2>
+<p class="note">Formularz przygotuje wiadomość z podsumowaniem. Nie wysyła danych do sklepu i nie pobiera płatności.</p>
+<label for="buyerName">Imię (opcjonalnie)</label><input id="buyerName" maxlength="60" placeholder="Jak mamy się do Ciebie zwracać?">
+<label for="buyerEmail">E-mail kontaktowy (opcjonalnie)</label><input id="buyerEmail" type="email" placeholder="np. kontakt@example.com">
+<label for="delivery">Sposób odbioru (testowo)</label><select id="delivery"><option>Do ustalenia</option><option>Odbiór osobisty — do ustalenia</option><option>Wysyłka — koszt do ustalenia</option></select>
+<label for="buyerNotes">Uwagi do zamówienia (opcjonalnie)</label><textarea id="buyerNotes" maxlength="500" placeholder="Np. pytanie o produkt. Nie wpisuj adresu domowego ani danych wrażliwych w tej wersji demo."></textarea>
+<button onclick="prepareOrder()">Przygotuj podsumowanie zamówienia</button>
+<div id="orderResult" style="display:none;margin-top:14px;background:#f0f7ff;border-radius:14px;padding:14px"></div>
+</div>
+</section>
+</main>
+<footer>RandomPaka • Projekt demonstracyjny • Brak płatności i wysyłania zamówień</footer>
+<div id="toast" class="toast" role="status"></div>
+<script>
+const cart=[];
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2600)}
+function add(name,price){cart.push({name,price});renderCart();toast('Dodano: '+name)}
+function updateShirt(){const p=document.getElementById('shirtPreview');const color=document.getElementById('shirtColor').value;p.style.background=color;p.style.color=color==='#ffffff'?'#172033':'#ffffff';const text=document.getElementById('shirtText').value.trim();p.textContent=text||'TWÓJ NAPIS';}
+function addShirt(){const size=document.getElementById('shirtSize').value;const side=document.getElementById('shirtSide');const price=Number(side.value);add('Koszulka, rozmiar '+size+', '+(side.selectedIndex===0?'jedna strona':'dwie strony')+', napis: '+(document.getElementById('shirtText').value.trim()||'brak'),price)}
+function updateSticker(){const p=document.getElementById('stickerPreview');p.style.background=document.getElementById('stickerColor').value;p.textContent=document.getElementById('stickerEmoji').value+(document.getElementById('stickerText').value.trim()?' '+document.getElementById('stickerText').value.trim():'')}
+function addSticker(){add('Naklejka: '+document.getElementById('stickerEmoji').value+' '+document.getElementById('stickerText').value.trim(),7)}
+function renderCart(){document.getElementById('cartCount').textContent=cart.length;document.getElementById('cartTotal').textContent=cart.reduce((s,x)=>s+x.price,0)+' zł';const el=document.getElementById('cartItems');if(!cart.length){el.innerHTML='<p class="note">Koszyk jest pusty. Dodaj coś z listy produktów.</p>';return}el.innerHTML='';cart.forEach((item,i)=>{const row=document.createElement('div');row.className='cart-item';const left=document.createElement('div');const name=document.createElement('strong');name.textContent=item.name;const small=document.createElement('small');small.textContent=item.price+' zł';left.append(name,small);const btn=document.createElement('button');btn.className='secondary';btn.textContent='Usuń';btn.onclick=()=>{cart.splice(i,1);renderCart()};row.append(left,btn);el.append(row)})}
+function clearCart(){cart.length=0;renderCart();toast('Koszyk wyczyszczony')}
+function copySummary(){if(!cart.length){toast('Najpierw dodaj coś do koszyka');return}const text='RandomPaka — podsumowanie demonstracyjne\n'+cart.map((x,i)=>(i+1)+'. '+x.name+' — '+x.price+' zł').join('\n')+'\nRazem: '+cart.reduce((s,x)=>s+x.price,0)+' zł\nTo nie jest prawdziwe zamówienie.';if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(()=>toast('Podsumowanie skopiowane')).catch(()=>fallbackCopy(text))}else fallbackCopy(text)}
+function fallbackCopy(text){const a=document.createElement('textarea');a.value=text;document.body.append(a);a.select();try{document.execCommand('copy');toast('Podsumowanie skopiowane')}catch(e){toast('Nie udało się skopiować — zaznacz tekst ręcznie')}a.remove()}
+function prepareOrder(){
+ if(!cart.length){toast('Najpierw dodaj produkt do koszyka');return}
+ const name=document.getElementById('buyerName').value.trim();
+ const email=document.getElementById('buyerEmail').value.trim();
+ const delivery=document.getElementById('delivery').value;
+ const notes=document.getElementById('buyerNotes').value.trim();
+ const total=cart.reduce((sum,item)=>sum+item.price,0);
+ const lines=cart.map((item,i)=>`${i+1}. ${item.name} — ${item.price} zł`).join('\\n');
+ const summary=`ZAMÓWIENIE TESTOWE — RANDOMPAKA\\n${name?'Imię: '+name+'\\n':''}${email?'E-mail: '+email+'\\n':''}Odbiór/dostawa: ${delivery}\\n\\nProdukty:\\n${lines}\\n\\nRazem: ${total} zł${notes?'\\nUwagi: '+notes:''}\\n\\nTo podsumowanie nie zostało wysłane do sklepu.`;
+ const box=document.getElementById('orderResult');box.style.display='block';box.replaceChildren();
+ const pre=document.createElement('pre');pre.style.whiteSpace='pre-wrap';pre.style.fontFamily='inherit';pre.textContent=summary;
+ const copy=document.createElement('button');copy.textContent='Kopiuj podsumowanie zamówienia';copy.onclick=()=>{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(()=>toast('Podsumowanie skopiowane')).catch(()=>fallbackCopy(summary))}else fallbackCopy(summary)};
+ box.append(pre,copy);
+}
+function showInfo(){alert('To jest wersja demonstracyjna. Nie pobiera płatności, nie rejestruje zamówień i nie wysyła formularza do właściciela sklepu. Do prawdziwej sprzedaży potrzebne są bezpieczne płatności, obsługa zamówień, polityka prywatności i uzgodnienia z rodzicem/opiekunem. Nie zbieraj danych klientów przez tę wersję demo.')}
+updateShirt();updateSticker();
+</script>
+</body>
+</html>
